@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>You are logged In!</h2>
+  <div id='user'></div>
+
+  <form method="post" action="/logout">
+    <input type="submit" value="LogOut" onclick='logoutFunc()' ></button>
+  </form>
+
+  <button onclick="changeText()">Name me!</button>
+  <!-- <button id='logout' onclick='logoutFunc()'>logout</button> -->
+
+  <script>
+    function logoutFunc(){
+      fetch('/logout', {method:'post'})
+       .then(console.log('logout'))
+       .catch(e => console.log('err logout ', e))
+    }
+
+    function changeText(){
+      console.log('button got clicked!')
+      fetch('http://localhost:8080/getName', {method: 'post', mode: 'same-origin'})
+        .then(data => data.json())        
+        .then(resJson => {
+          console.log(resJson.name)
+          document.getElementById('user').innerHTML = resJson.name
+        });
+    }
+  </script>
+  
+</body>
+</html>
